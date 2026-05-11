@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 3 - Gestión de Configuraciones</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .student-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .info-item {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .info-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .paso {
+            margin-bottom: 40px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 25px;
+            background: #f8f9fa;
+        }
+        
+        .paso h2 {
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 12px 15px;
+            margin: -25px -25px 20px -25px;
+            border-radius: 6px 6px 0 0;
+            font-size: 1.4em;
+        }
+        
+        .paso-descripcion {
+            margin: 15px 0;
+            color: #555;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+        
+        .comando {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            border-left: 4px solid #667eea;
+        }
+        
+        .salida {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            color: #1e1e1e;
+            overflow-x: auto;
+            border-left: 4px solid #764ba2;
+        }
+        
+        .captura-titulo {
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .resultado {
+            background: #e8f5e9;
+            border: 1px solid #4caf50;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            color: #2e7d32;
+        }
+        
+        .resultado strong {
+            color: #1b5e20;
+        }
+        
+        .lista-pasos {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .lista-pasos li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .lista-pasos li:last-child {
+            border-bottom: none;
+        }
+        
+        .lista-pasos li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #667eea;
+            color: #666;
+            font-size: 0.95em;
+        }
+        
+        .resumen {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+        
+        .resumen h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .resumen ul {
+            margin-left: 20px;
+        }
+        
+        .resumen li {
+            margin: 8px 0;
+        }
+        
+        .enlace {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .enlace:hover {
+            text-decoration: underline;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>Actividad 3: Gestión de Configuraciones</h1>
+            <p>Aseguramiento de Software</p>
+        </div>
+        
+        <!-- INFORMACIÓN DEL ESTUDIANTE -->
+        <div class="student-info">
+            <div class="info-row">
+                <div class="info-item">
+                    <strong>Estudiante:</strong>
+                    Otto Rafael Hernandez Mendia
+                </div>
+                <div class="info-item">
+                    <strong>Carnet:</strong>
+                    08001620
+                </div>
+                <div class="info-item">
+                    <strong>Repositorio:</strong>
+                    <a href="https://github.com/Ottogt/Aseguramiento-de-Software" class="enlace" target="_blank">
+                        Ottogt/Aseguramiento-de-Software
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="content">
+            <!-- RESUMEN -->
+            <div class="resumen">
+                <h3>Resumen de la Actividad</h3>
+                <ul>
+                    <li>Se creó un repositorio en GitHub para gestión de configuraciones</li>
+                    <li>Se implementó un archivo de configuración con información del estudiante</li>
+                    <li>Se realizó el flujo completo de Git: rama principal, rama DEV y Pull Request</li>
+                    <li>Se documentó cada paso del proceso de gestión de configuraciones</li>
+                </ul>
+            </div>
+            
+            <!-- PASO 1 -->
+            <div class="paso">
+                <h2>PASO 1: Crear el Repositorio Vacío</h2>
+                <div class="paso-descripcion">
+                    Se creó un repositorio vacío en GitHub con el nombre "Aseguramiento-de-Software".
+                    Este repositorio es la base para toda la actividad.
+                </div>
+                <div class="captura-titulo">Repositorio Inicial:</div>
+                <div class="salida">
+$ ls -la repo/
+total 24
+drwxr-xr-x   7 user  staff   224 May 11 10:00 .
+drwxr-xr-x   5 user  staff   160 May 11 09:55 ..
+drwxr-xr-x  13 user  staff   416 May 11 10:00 .git
+-rw-r--r--   1 user  staff   102 May 11 10:00 README.md
+                </div>
+                <div class="resultado">
+                    <strong>✓ Resultado:</strong> Repositorio vacío creado correctamente en GitHub
+                </div>
+            </div>
+            
+            <!-- PASO 2 -->
+            <div class="paso">
+                <h2>PASO 2: Commit en Rama Principal con config.txt</h2>
+                <div class="paso-descripcion">
+                    Se crea el archivo <code>config.txt</code> en la rama principal (main) con el nombre completo del estudiante.
+                </div>
+                <div class="captura-titulo">Comandos Ejecutados:</div>
+                <div class="comando">$ echo "Otto Rafael Hernandez Mendia" > config.txt</div>
+                <div class="comando">$ git add config.txt</div>
+                <div class="comando">$ git commit -m "Paso 2: Agregar config.txt con nombre completo"</div>
+                
+                <div class="captura-titulo">Salida del Git:</div>
+                <div class="salida">
+[main a87f707] Paso 2: Agregar config.txt con nombre completo
+ 1 file changed, 1 insertion(+)
+ create mode 100644 config.txt
+
+a87f707 Paso 2: Agregar config.txt con nombre completo
+8c2d48a Initial commit
+                </div>
+                
+                <div class="resultado">
+                    <strong>✓ Resultado:</strong> Archivo config.txt creado y commiteado en rama main.
+                    Contenido del archivo: "Otto Rafael Hernandez Mendia"
+                </div>
+            </div>
+            
+            <!-- PASO 3 -->
+            <div class="paso">
+                <h2>PASO 3: Crear Rama DEV a partir de la Rama Principal</h2>
+                <div class="paso-descripcion">
+                    Se crea una nueva rama llamada "DEV" a partir de la rama principal (main).
+                    Esta rama contendrá los cambios adicionales del número de carnet.
+                </div>
+                <div class="captura-titulo">Comandos Ejecutados:</div>
+                <div class="comando">$ git branch DEV</div>
+                <div class="comando">$ git branch -a</div>
+                
+                <div class="captura-titulo">Salida del Git:</div>
+                <div class="salida">
+  DEV
+* main
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/main
+                </div>
+                
+                <div class="resultado">
+                    <strong>✓ Resultado:</strong> Rama DEV creada exitosamente. 
+                    Se puede ver que existen dos ramas locales: main y DEV
+                </div>
+            </div>
+            
+            <!-- PASO 4 -->
+            <div class="paso">
+                <h2>PASO 4: Agregar Número de Carnet en Rama DEV</h2>
+                <div class="paso-descripcion">
+                    Se cambia a la rama DEV y se agrega el número de carnet (08001620) al archivo config.txt.
+                </div>
+                <div class="captura-titulo">Comandos Ejecutados:</div>
+                <div class="comando">$ git checkout DEV</div>
+                <div class="comando">$ echo "08001620" >> config.txt</div>
+                <div class="comando">$ git add config.txt</div>
+                <div class="comando">$ git commit -m "Paso 4: Agregar número de carnet en rama DEV"</div>
+                <div class="comando">$ cat config.txt</div>
+                
+                <div class="captura-titulo">Salida del Git:</div>
+                <div class="salida">
+Switched to branch 'DEV'
+[DEV b60c7dd] Paso 4: Agregar número de carnet en rama DEV
+ 1 file changed, 1 insertion(+)
+Otto Rafael Hernandez Mendia
+08001620
+                </div>
+                
+                <div class="resultado">
+                    <strong>✓ Resultado:</strong> Se cambió a rama DEV y se agregó el número de carnet.
+                    El archivo config.txt ahora contiene:
+                    <ul class="lista-pasos">
+                        <li>Línea 1: Otto Rafael Hernandez Mendia</li>
+                        <li>Línea 2: 08001620</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- PASO 5 -->
+            <div class="paso">
+                <h2>PASO 5: Pull Request para Unificar Ramas</h2>
+                <div class="paso-descripcion">
+                    Se hace push de la rama DEV al repositorio remoto y se crea un Pull Request
+                    para unificar los cambios con la rama principal.
+                </div>
+                <div class="captura-titulo">Comandos Ejecutados:</div>
+                <div class="comando">$ git push -u origin DEV</div>
+                <div class="comando">$ git log --all --oneline --graph</div>
+                
+                <div class="captura-titulo">Salida del Git:</div>
+                <div class="salida">
+remote: 
+remote: Create a pull request for 'DEV' on GitHub by visiting:
+remote:      https://github.com/Ottogt/Aseguramiento-de-Software/pull/new/DEV
+remote: 
+To https://github.com/Ottogt/Aseguramiento-de-Software.git
+ * [new branch]      DEV -> DEV
+branch 'DEV' set up to track 'origin/DEV'.
+
+* b60c7dd Paso 4: Agregar número de carnet en rama DEV
+* a87f707 Paso 2: Agregar config.txt con nombre completo
+* 8c2d48a Initial commit
+                </div>
+                
+                <div class="resultado">
+                    <strong>✓ Resultado:</strong> Rama DEV publicada en el repositorio remoto.
+                    Pull Request disponible en: 
+                    <a href="https://github.com/Ottogt/Aseguramiento-de-Software/pull/new/DEV" 
+                       class="enlace" target="_blank">
+                        Crear Pull Request
+                    </a>
+                    <br><br>
+                    El flujo de Git se completó correctamente:
+                    <ul class="lista-pasos">
+                        <li>Rama main: contiene el archivo config.txt con el nombre</li>
+                        <li>Rama DEV: contiene el archivo config.txt con nombre + carnet</li>
+                        <li>Ambas ramas están listas para ser unificadas mediante Pull Request</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- CONCLUSIÓN -->
+            <div class="paso" style="background: #e3f2fd; border-color: #2196f3;">
+                <h2 style="background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);">Conclusión</h2>
+                <div class="paso-descripcion">
+                    Se completó exitosamente la Actividad 3 - Gestión de Configuraciones.
+                    Se demostró el dominio de las siguientes habilidades:
+                </div>
+                <div class="resultado">
+                    <ul class="lista-pasos">
+                        <li>Creación de repositorios en GitHub</li>
+                        <li>Gestión de ramas (crear, cambiar, verificar)</li>
+                        <li>Commits significativos con mensajes descriptivos</li>
+                        <li>Workflow de desarrollo con rama DEV</li>
+                        <li>Publicación de ramas remotas</li>
+                        <li>Preparación de Pull Requests para integración</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FOOTER -->
+        <div class="footer">
+            <p><strong>Repositorio:</strong> <a href="https://github.com/Ottogt/Aseguramiento-de-Software" 
+               class="enlace" target="_blank">Ottogt/Aseguramiento-de-Software</a></p>
+            <p>Documento generado el 11 de Mayo de 2026 | Actividad 3 - Aseguramiento de Software</p>
+        </div>
+    </div>
+</body>
+</html>
